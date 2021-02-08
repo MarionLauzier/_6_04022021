@@ -2,11 +2,12 @@ const express = require("express");
 
 const router = express.Router();
 
+const multer = require("../middleware/multer-image");
 const saucesCtrl = require("../controllers/sauces");
 
-router.post("/", saucesCtrl.addSauce);
+router.post("/", multer, saucesCtrl.addSauce);
 
-router.put("/:id", saucesCtrl.updateSauce);
+router.put("/:id", multer, saucesCtrl.updateSauce);
 
 router.delete("/:id", saucesCtrl.deleteSauce);
 

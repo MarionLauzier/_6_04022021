@@ -40,13 +40,55 @@ exports.updateSauce = (req, res, next) => {
 				}`,
 		  }
 		: { ...req.body };
-	Sauce.updateOne(
-		{ _id: req.params.id },
-		{ ...sauceObject, _id: req.params.id }
-	)
-		.then(() => res.status(200).json({ message: "Sauce modifiée !" }))
-		.catch((error) => res.status(400).json({ error }));
+	// vérifier que le user a l'origine de la requête à l'autorisation de modifier cette sauce
+	Sauce.findOne({ _id: req.params.id })
+		.then((sauce) => {
+			if (sauce.userId == sauceObject.userId) {
+				Sauce.updateOne(
+					{ _id: req.params.id },
+					{ ...sauceObject, _id: req.params.id }
+				)
+					.then(() => res.status(200).json({ message: "Sauce modifiée !" }))
+					.catch((error) => res.status(400).json({ error }));
+			} else {
+				throw new Error(
+					"Vous n'avez pas l'autorisation de modifier cette sauce!"
+				);
+			}
+		})
+		.catch((error) => res.status(403).json({ error }));
+	//supprimer l'ancienne image ?
 };
+// --------------------V2 de updateSauce
+// exports.updateSauce = (req, res, next) => {
+// 	const sauceObject = req.file
+// 		? {
+// 				...JSON.parse(req.body.sauce),
+// 				imageUrl: `${req.protocol}://${req.get("host")}/images/${
+// 					req.file.filename
+// 				}`,
+// 		  }
+// 		: { ...req.body };
+// 	// vérifier que le user a l'origine de la requête à l'autorisation de modifier cette sauce
+// 	Sauce.findOne({ _id: req.params.id })
+// 		.then((sauce) => {
+// 			if (sauce.userId != sauceObject.userId) {
+// 				return res
+// 					.status(403)
+// 					.json({
+// 						error: "Vous n'avez pas l'autorisation de modifier cette sauce!",
+// 					});
+// 			}
+// 			Sauce.updateOne(
+// 				{ _id: req.params.id },
+// 				{ ...sauceObject, _id: req.params.id }
+// 			)
+// 				.then(() => res.status(200).json({ message: "Sauce modifiée !" }))
+// 				.catch((error) => res.status(400).json({ error }));
+// 		})
+// 		.catch((error) => res.status(500).json({ error }));
+// 	//supprimer l'ancienne image ?
+// };
 
 exports.deleteSauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
@@ -77,8 +119,7 @@ exports.likeSauce = (req, res, next) => {
 					sauce.likes--;
 					const indexL = sauce.usersLiked.indexOf(user);
 					sauce.usersLiked.splice(indexL, 1);
-				}
-				if (sauce.usersDisliked.includes(user)) {
+				} else if (sauce.usersDisliked.includes(user)) {
 					sauce.dislikes--;
 					const indexD = sauce.usersDisliked.indexOf(user);
 					sauce.usersDisliked.splice(indexD, 1);

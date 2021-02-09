@@ -1,4 +1,5 @@
 const Sauce = require("../models/sauce");
+const fs = require("fs");
 
 exports.getAllSauces = (req, res, next) => {
 	Sauce.find()
@@ -104,9 +105,8 @@ exports.deleteSauce = (req, res, next) => {
 };
 
 exports.likeSauce = (req, res, next) => {
-	const likeObject = JSON.parse(req.body);
-	const user = likeObject.userId;
-	const like = likeObject.like;
+	const user = req.body.userId;
+	const like = req.body.like;
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
 			if (like == 1) {

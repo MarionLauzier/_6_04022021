@@ -45,11 +45,20 @@ exports.updateSauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
 			if (sauce.userId == sauceObject.userId) {
+				const oldImage = sauce.imageUrl.split("/images/")[1];
 				Sauce.updateOne(
 					{ _id: req.params.id },
 					{ ...sauceObject, _id: req.params.id }
 				)
-					.then(() => res.status(200).json({ message: "Sauce modifiée !" }))
+					.then(() => {
+						//suppression de l'ancienne photo dans le cas ou une nouvelle est chargée
+						if (req.file) {
+							fs.unlink(`images/${oldImage}`, (err) => {
+								if (err) throw err;
+							});
+						}
+						res.status(200).json({ message: "Sauce modifiée !" });
+					})
 					.catch((error) => res.status(400).json({ error }));
 			} else {
 				throw new Error(
@@ -58,7 +67,6 @@ exports.updateSauce = (req, res, next) => {
 			}
 		})
 		.catch((error) => res.status(403).json({ error }));
-	//supprimer l'ancienne image ?
 };
 // --------------------V2 de updateSauce
 // exports.updateSauce = (req, res, next) => {
@@ -88,14 +96,16 @@ exports.updateSauce = (req, res, next) => {
 // 				.catch((error) => res.status(400).json({ error }));
 // 		})
 // 		.catch((error) => res.status(500).json({ error }));
-// 	//supprimer l'ancienne image ?
+//
 // };
 
 exports.deleteSauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
 			const filename = sauce.imageUrl.split("/images/")[1];
+			//suppression de l'image
 			fs.unlink(`images/${filename}`, () => {
+				//Suppression de la sauce dans la base de données
 				Sauce.deleteOne({ _id: req.params.id })
 					.then(() => res.status(200).json({ message: "Sauce supprimée !" }))
 					.catch((error) => res.status(400).json({ error }));

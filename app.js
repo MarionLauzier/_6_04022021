@@ -11,7 +11,7 @@ const app = express();
 
 mongoose
 	.connect(
-		"mongodb+srv://ocuser:mongopassword@cluster0.lftb8.mongodb.net/sopekocko?retryWrites=true&w=majority",
+		"mongodb+srv://sopekockouser:hotsauce@cluster0.lftb8.mongodb.net/sopekocko?retryWrites=true&w=majority",
 		{ useNewUrlParser: true, useUnifiedTopology: true }
 	)
 	.then(() => console.log("Connexion à MongoDB réussie !"))

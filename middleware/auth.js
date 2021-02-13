@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
 	try {
 		const token = req.headers.authorization.split(" ")[1];
-		const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+		const decodedToken = jwt.verify(
+			token,
+			"SOPEKOCKO_RandomTokenSecretKeyForSoPekockoUsers"
+		);
 		const userId = decodedToken.userId;
 		const bodyUserId = req.file ? req.body.sauce.userId : req.body.userId;
 		if (bodyUserId && bodyUserId !== userId) {

@@ -13,6 +13,8 @@ qui peut être clonée et installée en local avec node.js et npm. (pour install
 
 ![Screenshot](readme/sopekocko.png)
 
+### Fonctionnement:
+
 Cet API fonctionne sur le principe d'une **APIrest** et met en place une logique **CRUD**, (Create, Read, Update, Delete) en fonction des autorisations.
 
 L'API est codée en _Javascript_, elle est réalisée en utilisant un _server NodeJS_ et le _framework Express_ pour la création de l'application. La base de données est hébergé par _MongoDB Atlas_ et est gérée via l'interface _Mongoose_.
@@ -24,7 +26,7 @@ L'API utilise des pratiques de **code sécurisé** et respecte le RGPD et les st
 - Base de données sécurisée grâce au service MongoDB Atlas
 - Authentification par jeton requise pour toute action, les jetons sont générés par la technologie _JsonWebToken_
 
-## Utilisation:
+### Utilisation:
 
 1. Cloner le répertoire
 2. Installer l'API avec la commande `npm install`
@@ -32,6 +34,8 @@ L'API utilise des pratiques de **code sécurisé** et respecte le RGPD et les st
 4. Une fois la partie front-end lancée, rendez-vous sur Http://localhost/4200 pour intéragir avec le backend.
 
 Si vous souhaitez intéragir avec l'API autrement qu'avec la partie front-end existante, voici la documentation des différentes requêtes possibles : [GuidelinesAPI.pdf](readme/GuidelinesAPI.pdf)
+
+### Exemple d'utilisation:
 
 <p align="center"> 
 Aperçu de la page d'accueil après ajout de 3 sauces par les utilisateurs:

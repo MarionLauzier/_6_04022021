@@ -8,7 +8,7 @@ const userRoutes = require("./routes/users");
 const path = require("path");
 
 const app = express();
-
+//connexion à la base de données
 mongoose
 	.connect(
 		"mongodb+srv://sopekockouser:hotsauce@cluster0.lftb8.mongodb.net/sopekocko?retryWrites=true&w=majority",
@@ -16,7 +16,7 @@ mongoose
 	)
 	.then(() => console.log("Connexion à MongoDB réussie !"))
 	.catch(() => console.log("Connexion à MongoDB échouée !"));
-
+// paramétrage des en-tête des autorisations
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader(
@@ -34,7 +34,4 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
 
-app.use((req, res, next) => {
-	res.end(req.body.userId);
-});
 module.exports = app;

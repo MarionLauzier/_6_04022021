@@ -61,9 +61,7 @@ exports.updateSauce = (req, res, next) => {
 					})
 					.catch((error) => res.status(400).json({ error }));
 			} else {
-				throw new Error(
-					"Vous n'avez pas l'autorisation de modifier cette sauce!"
-				);
+				throw "Vous n'avez pas l'autorisation de modifier cette sauce!";
 			}
 		})
 		.catch((error) => res.status(403).json({ error }));
@@ -140,7 +138,7 @@ exports.likeSauce = (req, res, next) => {
 					sauce.usersDisliked.push(user);
 				}
 			} else {
-				throw new Error("La requête est erronnée!");
+				throw "La requête est erronnée!";
 			}
 			sauce
 				.save()

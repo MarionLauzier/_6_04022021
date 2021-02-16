@@ -37,6 +37,7 @@ const errorHandler = (error) => {
 	}
 };
 
+//creation du server express
 const server = http.createServer(app);
 
 //un écouteur d'évènements est également enregistré, consignant le port ou le canal nommé sur lequel le serveur s'exécute dans la console.

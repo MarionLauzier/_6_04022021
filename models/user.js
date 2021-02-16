@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
-require("mongoose-type-email");
-mongoose.SchemaTypes.Email.defaults.message = "L'email n'est pas valide !";
 
 const uniqueValidator = require("mongoose-unique-validator");
 
 const userSchema = mongoose.Schema({
 	email: {
-		type: mongoose.SchemaTypes.Email,
-		correctTld: true,
+		type: String,
 		required: true,
 		unique: true,
 	},

@@ -21,7 +21,7 @@ L'API est codée en _Javascript_, elle est réalisée en utilisant un _server No
 
 L'API utilise des pratiques de **code sécurisé** et respecte le RGPD et les standards OWASP en ayant recours aux:
 
-- Chiffrement des mots de passe dans la base de données avec l'algorithme _bcrypt_
+- Chiffrement des mots de passe dans la base de données avec l'algorithme _bcrypt_ et hashage des adresses email
 - Principe de pseudonymisation: un id est attribué à chaque utilisateur et seul l'adresse email des utilisateurs est connue (aucun nom, adresse, date de naissance... sont stockés dans la base de donnée)
 - Base de données sécurisée grâce au service MongoDB Atlas
 - Authentification par jeton requise pour toute action, les jetons sont générés par la technologie _JsonWebToken_
